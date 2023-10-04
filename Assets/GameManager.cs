@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public int pointsWorth = 1;
     private int score;
+
+    private bool smokeCleared = true;
     
 
     void Awake()
@@ -38,8 +40,9 @@ public class GameManager : MonoBehaviour
     {
         if (!gameStarted)
         {
-            if (Input.anyKeyDown)
+            if (Input.anyKeyDown && smokeCleared)
             {
+                smokeCleared = false;
                 ResetGame();
             }
         }
@@ -86,6 +89,12 @@ public class GameManager : MonoBehaviour
         spawner.active = false;
         gameStarted = false;
 
+        Invoke("SplashScreen", 2f);
+    }
+
+    void SplashScreen()
+    {
+           smokeCleared = true;
         splash.SetActive(true);
     }
 }
